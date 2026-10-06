@@ -1,0 +1,41 @@
+{
+  "name": "twc-ai-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "seed": "node --experimental-strip-types --env-file=.env.local scripts/seed.ts",
+    "db:check": "node --experimental-strip-types --env-file=.env.local scripts/check-db.ts",
+    "ingest:kb": "node --experimental-strip-types --env-file=.env.local scripts/ingest_kb.ts",
+    "eval": "node --experimental-strip-types --env-file=.env.local scripts/eval_golden.ts",
+    "race": "node --experimental-strip-types --env-file=.env.local scripts/race_test.ts",
+    "test": "node --experimental-strip-types --env-file=.env.local scripts/run_tests.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.65.0",
+    "@pinecone-database/pinecone": "^6.1.2",
+    "@supabase/supabase-js": "^2.116.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.46.0",
+    "next": "16.3.5",
+    "postgres": "^3.4.9",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
