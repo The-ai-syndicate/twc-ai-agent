@@ -42,3 +42,10 @@ next-env.d.ts
 
 # logs
 *.log
+server-3001.log
+server3001.log
+
+# local debug/dev artifacts (do not commit)
+errors.txt
+served.html
+/logs/

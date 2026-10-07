@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * TWC theme tokens.
+ * Brand palette is derived from the brand gradient:
+ *   #C93530 (0%) -> #DB5F2E (50%) -> #EA892D (100%)
+ * --twc-gradient is the single source of truth for the full ramp;
+ * --twc-brand / --twc-brand-* are solid tokens for borders, rings,
+ * text and hover states that can't use a gradient directly.
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-brand: #db5f2e;               /* brand midpoint — primary accent */
+  --color-brand-dark: #c93530;          /* gradient start */
+  --color-brand-light: #ea892d;         /* gradient end */
+  --color-brand-foreground: #ffffff;
+}
+
+:root {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+
+  /* TWC brand ramp (single source of truth for the gradient). */
+  --twc-brand: #db5f2e;
+  --twc-brand-dark: #c93530;
+  --twc-brand-light: #ea892d;
+  --twc-gradient: linear-gradient(90deg, #C93530 0%, #DB5F2E 50%, #EA892D 100%);
+
+  /* Semantic status colors. */
+  --apple-green: #22c55e;
+  --apple-orange: #f97316;
+  --apple-red: #ef4444;
+  --apple-purple: #a855f7;
+
+  /* Surfaces. */
+  --apple-card-bg: rgba(24, 24, 27, 0.7);
+  --apple-card-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ------------------------------------------------------------------ *
+ * TWC brand gradient — single source of truth.
+ * Change the stops on --twc-gradient and every usage follows.
+ * ------------------------------------------------------------------ */
+
+/* Filled brand surface: section headers, primary buttons, brand chips. */
+.twc-gradient {
+  background-image: var(--twc-gradient);
+}
+
+/* Gradient text for brand headings on dark/transparent backgrounds. */
+.twc-gradient-text {
+  background-image: var(--twc-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft tinted surface for section-header bars — keeps text readable. */
+.twc-gradient-soft {
+  background-image: linear-gradient(
+    90deg,
+    rgba(201, 53, 48, 0.18) 0%,
+    rgba(219, 95, 46, 0.16) 50%,
+    rgba(234, 137, 45, 0.14) 100%
+  );
+  border: 1px solid rgba(219, 95, 46, 0.3);
+}
+
+/* Primary pill button: gradient fill + soft brand glow + hover lift. */
+.twc-gradient-btn {
+  background-image: var(--twc-gradient);
+  color: #ffffff;
+  border: 1px solid transparent;
+  box-shadow: 0 6px 18px -6px rgba(201, 53, 48, 0.55);
+  transition: filter 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.twc-gradient-btn:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 10px 26px -8px rgba(219, 95, 46, 0.7);
+}
+.twc-gradient-btn:active {
+  transform: translateY(1px);
+}
+.twc-gradient-btn:disabled {
+  filter: grayscale(0.35) brightness(0.85);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Thin 2px gradient rule for section dividers. */
+.twc-gradient-rule {
+  background-image: var(--twc-gradient);
+}
+
+/* Gradient border on a rounded surface (e.g. the chat composer).
+ * Uses the double-background trick: gradient only shows through the 1px
+ * border area via border-box/padding-box clipping. */
+.twc-gradient-border {
+  border: 1px solid transparent;
+  background-image: var(--twc-gradient), linear-gradient(rgba(18, 18, 22, 0.9), rgba(18, 18, 22, 0.9));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* Same as above but tuned to sit on the dark glass composer surface. */
+.twc-gradient-border-glass {
+  border: 1px solid transparent;
+  background-image: var(--twc-gradient), linear-gradient(rgba(18, 18, 22, 0.78), rgba(18, 18, 22, 0.78));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glass effect - dark refined */
+.apple-glass {
+  background: rgba(18, 18, 22, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.apple-glass-dark {
+  background: rgba(14, 14, 18, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f4f4f5;
+}
+
+.apple-card {
+  background: #131317;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.7), 0 6px 14px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* Floating glass navigation */
+.glass-nav {
+  background: linear-gradient(
+    180deg,
+    rgba(24, 24, 27, 0.72) 0%,
+    rgba(14, 14, 18, 0.82) 100%
+  );
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 20px 40px -12px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-sheet-up {
+  animation: sheet-up 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.glass-tab {
+  background: rgba(24, 24, 27, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sheet-input {
+  width: 100%;
+  font-size: 0.8125rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: 1rem;
+  background: rgba(9, 9, 11, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f4f4f5;
+  outline: none;
+}
+.sheet-input::placeholder {
+  color: #52525b;
+}
+.sheet-input:focus {
+  border-color: rgba(219, 95, 46, 0.55);
+  box-shadow: 0 0 0 2px rgba(219, 95, 46, 0.25);
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Chat bubble entrance */
+@keyframes bubble-in {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-bubble-in {
+  animation: bubble-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Quick-action suggestion chips — staggered slow fade + rise.
+ * Each item sets --reveal-delay so they appear one by one. */
+@keyframes reveal-up {
+  from { transform: translateY(10px); opacity: 0; filter: blur(2px); }
+  to { transform: translateY(0); opacity: 1; filter: blur(0); }
+}
+.reveal-item {
+  opacity: 0;
+  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item {
+    animation-duration: 0.01ms;
+    animation-delay: 0ms;
+    opacity: 1;
+  }
+}
+
+/* Typing dots */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+.typing-dot {
+  animation: typing-dot 1.2s infinite ease-in-out;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
